@@ -1,0 +1,12 @@
+# Proyecto Nota 3 - Big Data con Python y PySpark
+# Probado con Python 3.11 (64 bits), la versión recomendada para PySpark 3.5.
+#
+# IMPORTANTE: la versión de pyspark DEBE ser idéntica a la de la distribución
+# de Spark descargada en SPARK_HOME (spark-3.5.9-bin-hadoop3).
+
+pyspark==3.5.9        # Motor distribuido (API Python de Apache Spark 3.5 LTS)
+pandas==2.2.3         # Versión "tradicional" del proyecto (rama 2.x, compatible con PySpark 3.5)
+numpy==1.26.4         # Requerida por pandas y PySpark; se fija en 1.x para evitar incompatibilidades con PySpark 3.5
+pyarrow==17.0.0       # Lectura/escritura Parquet en pandas, generador de datos y toPandas() en Spark
+psutil==6.1.1         # Medición de RAM/CPU en los benchmarks e info del equipo
+matplotlib==3.9.4     # Gráficos del análisis comparativo
