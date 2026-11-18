@@ -86,8 +86,10 @@ def consulta_2_tasas_devolucion_cancelacion(df_unido: pd.DataFrame) -> pd.DataFr
         .reset_index(name="transacciones_canceladas")
     )
 
-    res = total_trans.merge(devueltas, on=["canal", "categoria"], how="left").fillna(0)
-    res = res.merge(canceladas, on=["canal", "categoria"], how="left").fillna(0)
+    res = total_trans.merge(devueltas, on=["canal", "categoria"], how="left")
+    res["transacciones_devueltas"] = res["transacciones_devueltas"].fillna(0)  # solo numéricas: canal/categoria pueden ser category
+    res = res.merge(canceladas, on=["canal", "categoria"], how="left")
+    res["transacciones_canceladas"] = res["transacciones_canceladas"].fillna(0)
 
     res["tasa_devolucion_pct"] = (
         (res["transacciones_devueltas"] / res["total_transacciones"] * 100).round(2)

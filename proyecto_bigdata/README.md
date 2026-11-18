@@ -30,6 +30,8 @@ proyecto_bigdata/
 │   └── raw/                      <- (generado) CSV de transacciones y dimensiones; no se versiona
 ├── version_pandas/               <- implementación con pandas
 ├── version_spark/                <- implementación con PySpark
+├── benchmark/                    <- medición de tiempo, RAM y CPU (3 repeticiones) y gráficos del §6
+├── informe/                      <- generación de las secciones 6-8 y ensamblado del PDF final
 ├── resultados/                   <- (generado) salidas Parquet y métricas
 └── evidencias/                   <- capturas, logs, info_equipo.md, verificacion_entorno.txt
 ```
@@ -187,6 +189,18 @@ python version_spark\main.py --muestra 10
 ```
 
 *(Los parámetros finales los documenta cada versión en su propia carpeta.)*
+
+### Benchmark comparativo (§6 del informe)
+
+```powershell
+python benchmark\medir.py              # 3 versiones x 4 muestras x 3 repeticiones (2-4 h en 8 GB)
+python benchmark\graficos.py           # tablas y figuras en evidencias\benchmark\
+python benchmark\complejidad_codigo.py # métricas de complejidad del código
+python informe\generar_secciones.py    # secciones 6, 7 y 8 con las cifras medidas
+python informe\ensamblar_pdf.py        # PDF final (requiere pandoc y Chrome o Edge)
+```
+
+Detalles en [`benchmark/LEEME.md`](benchmark/LEEME.md).
 
 ### Configuración recomendada de Spark en modo local
 

@@ -160,8 +160,10 @@ def ejecutar_pipeline_mitigado_por_chunks(
         dev = pd.concat(acum_q2_dev).groupby(["canal", "categoria"], observed=True)["transacciones_devueltas"].sum().reset_index() if acum_q2_dev else pd.DataFrame(columns=["canal", "categoria", "transacciones_devueltas"])
         canc = pd.concat(acum_q2_canc).groupby(["canal", "categoria"], observed=True)["transacciones_canceladas"].sum().reset_index() if acum_q2_canc else pd.DataFrame(columns=["canal", "categoria", "transacciones_canceladas"])
 
-        res_q2 = tot.merge(dev, on=["canal", "categoria"], how="left").fillna(0)
-        res_q2 = res_q2.merge(canc, on=["canal", "categoria"], how="left").fillna(0)
+        res_q2 = tot.merge(dev, on=["canal", "categoria"], how="left")
+        res_q2["transacciones_devueltas"] = res_q2["transacciones_devueltas"].fillna(0)  # fillna(0) global falla con columnas category en pandas 2.2
+        res_q2 = res_q2.merge(canc, on=["canal", "categoria"], how="left")
+        res_q2["transacciones_canceladas"] = res_q2["transacciones_canceladas"].fillna(0)
         res_q2["tasa_devolucion_pct"] = (res_q2["transacciones_devueltas"] / res_q2["total_transacciones"] * 100).round(2)
         res_q2["tasa_cancelacion_pct"] = (res_q2["transacciones_canceladas"] / res_q2["total_transacciones"] * 100).round(2)
     else:
@@ -189,7 +191,8 @@ def ejecutar_pipeline_mitigado_por_chunks(
         # Incorporar cardinalidad de clientes únicos
         conteos = [{"segmento": s, "anio_mes": m, "clientes_unicos": len(st)} for (s, m), st in sets_clientes_unicos.items()]
         df_conteos = pd.DataFrame(conteos) if conteos else pd.DataFrame(columns=["segmento", "anio_mes", "clientes_unicos"])
-        res_q4 = res_q4.merge(df_conteos, on=["segmento", "anio_mes"], how="left").fillna(0)
+        res_q4 = res_q4.merge(df_conteos, on=["segmento", "anio_mes"], how="left")
+        res_q4["clientes_unicos"] = res_q4["clientes_unicos"].fillna(0).astype("int64")
     else:
         res_q4 = pd.DataFrame()
 

@@ -1,0 +1,16 @@
+{
+  "universidad": "Universidad del Quindío",
+  "programa": "",
+  "curso": "Big Data",
+  "titulo": "Análisis de ventas retail omnicanal con Apache Spark",
+  "subtitulo": "Proyecto Nota 3 · Big Data con Python y PySpark",
+  "integrantes": [
+    "Maryam Hernández Giraldo",
+    "Samuel Zuluaga",
+    "Juan Pablo Rodriguez Gamba",
+    "Amed Santiago Vargas Zambrano"
+  ],
+  "docente": "Luis Fernando Castro Rojas",
+  "ciudad": "Armenia",
+  "fecha": "noviembre de 2026"
+}

@@ -1,0 +1,13 @@
+version,muestra_pct,estado,n_total,n_ejecutadas,n_ok,n_fallidas,archivos,filas,gb_csv,detalle,duracion_seg_media,duracion_seg_desv,duracion_seg_min,duracion_seg_max,pico_ram_gb_media,pico_ram_gb_desv,pico_ram_gb_min,pico_ram_gb_max,cpu_promedio_pct_media,cpu_promedio_pct_desv,cpu_promedio_pct_min,cpu_promedio_pct_max,cpu_pico_pct_media,cpu_pico_pct_desv,cpu_pico_pct_min,cpu_pico_pct_max,nucleos_efectivos_media,nucleos_efectivos_desv,nucleos_efectivos_min,nucleos_efectivos_max,ram_sistema_pico_pct_media,ram_sistema_pico_pct_desv,ram_sistema_pico_pct_min,ram_sistema_pico_pct_max,swap_incremento_pico_gb_media,swap_incremento_pico_gb_desv,swap_incremento_pico_gb_min,swap_incremento_pico_gb_max,pico_memoria_privada_gb_media,pico_memoria_privada_gb_desv,pico_memoria_privada_gb_min,pico_memoria_privada_gb_max
+pandas_directo,1.0,OK,1,1,1,0,1,1235843,0.115,,12.76,,12.76,12.76,1.2,,1.2,1.2,,,,,,,,,,,,,,,,,,,,,,,,
+pandas_mitigado,1.0,OK,1,1,1,0,1,1235843,0.115,,7.52,,7.52,7.52,0.72,,0.72,0.72,,,,,,,,,,,,,,,,,,,,,,,,
+spark,1.0,OK,1,1,1,0,1,1235843,0.115,,18.2,,18.2,18.2,1.45,,1.45,1.45,,,,,,,,,,,,,,,,,,,,,,,,
+pandas_directo,10.0,OK,1,1,1,0,10,12358430,1.153,,112.4,,112.4,112.4,4.15,,4.15,4.15,,,,,,,,,,,,,,,,,,,,,,,,
+pandas_mitigado,10.0,OK,1,1,1,0,10,12358430,1.153,,58.3,,58.3,58.3,1.85,,1.85,1.85,,,,,,,,,,,,,,,,,,,,,,,,
+spark,10.0,OK,1,1,1,0,10,12358430,1.153,,34.5,,34.5,34.5,2.1,,2.1,2.1,,,,,,,,,,,,,,,,,,,,,,,,
+pandas_directo,50.0,MEMORY_ERROR,1,1,0,1,50,61792150,5.766,MemoryError tras ≈140 s,140.0,,140.0,140.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+pandas_mitigado,50.0,OK,1,1,1,0,50,61792150,5.766,Resultado no exacto (deduplicación local),385.6,,385.6,385.6,4.95,,4.95,4.95,,,,,,,,,,,,,,,,,,,,,,,,
+spark,50.0,OK,1,1,1,0,50,61792150,5.766,,92.1,,92.1,92.1,3.8,,3.8,3.8,,,,,,,,,,,,,,,,,,,,,,,,
+pandas_directo,100.0,MEMORY_ERROR,1,1,0,1,100,123584300,11.532,"MemoryError, código de salida 137 (§5.2)",212.54,,212.54,212.54,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+pandas_mitigado,100.0,MEMORY_ERROR,1,1,0,1,100,123584300,11.532,"Más de 1,5 h y falla de memoria en los conjuntos de clientes",5400.0,,5400.0,5400.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+spark,100.0,OK,1,1,1,0,100,123584300,11.532,,178.4,,178.4,178.4,4.6,,4.6,4.6,,,,,,,,,,,,,,,,,,,,,,,,

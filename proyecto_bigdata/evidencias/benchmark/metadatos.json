@@ -1,0 +1,49 @@
+{
+  "fuente": "seccion5",
+  "equipo": {
+    "fecha": "2026-11-17T01:07:21",
+    "equipo": "PC_SAMUEL",
+    "sistema_operativo": "Windows 11 (build 10.0.26200)",
+    "procesador": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "nucleos_fisicos": 8,
+    "hilos_logicos": 12,
+    "frecuencia_max_mhz": 2100,
+    "ram_total_gb": 7.64,
+    "ram_disponible_gb_al_medir": 0.84,
+    "disco_unidad_proyecto": "C:\\",
+    "disco_total_gb": 475.8,
+    "disco_libre_gb": 125.2,
+    "discos_fisicos": [
+      {
+        "FriendlyName": "PC SN5000S SDEPNSJ-512G-1006",
+        "MediaType": "SSD",
+        "BusType": "NVMe",
+        "GB": 477
+      }
+    ],
+    "python": "3.14.7",
+    "java": "openjdk version \"21.0.10\" 2026-01-20 LTS",
+    "pyspark": "no instalado",
+    "pandas": "3.0.6",
+    "numpy": "2.5.3",
+    "pyarrow": "26.0.1",
+    "JAVA_HOME": "C:\\Users\\samue\\Downloads\\OpenJDK21U-jdk_x64_windows_hotspot_21.0.10_7\\jdk-21.0.10+7",
+    "SPARK_HOME": null,
+    "HADOOP_HOME": null,
+    "PYSPARK_PYTHON": null
+  },
+  "parametros": {
+    "repeticiones": 1,
+    "versiones": [
+      "pandas_directo",
+      "pandas_mitigado",
+      "spark"
+    ],
+    "muestras": [
+      1.0,
+      10.0,
+      50.0,
+      100.0
+    ]
+  }
+}

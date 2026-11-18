@@ -1,0 +1,204 @@
+{
+  "etapas": [
+    {
+      "etapa": "Configuración del motor",
+      "pandas": null,
+      "spark": {
+        "archivo": "sesion.py",
+        "loc": 56,
+        "lineas_totales": 112,
+        "funciones": 4,
+        "loc_por_funcion": 12.5,
+        "cc_total": 10,
+        "cc_max": 6,
+        "funcion_cc_max": "crear_sesion",
+        "anidamiento_max": 1
+      }
+    },
+    {
+      "etapa": "Carga",
+      "pandas": {
+        "archivo": "cargador.py",
+        "loc": 78,
+        "lineas_totales": 141,
+        "funciones": 3,
+        "loc_por_funcion": 21.0,
+        "cc_total": 21,
+        "cc_max": 8,
+        "funcion_cc_max": "cargar_transacciones_completas",
+        "anidamiento_max": 2
+      },
+      "spark": {
+        "archivo": "cargador.py",
+        "loc": 41,
+        "lineas_totales": 71,
+        "funciones": 3,
+        "loc_por_funcion": 7.0,
+        "cc_total": 5,
+        "cc_max": 3,
+        "funcion_cc_max": "cargar_dimensiones",
+        "anidamiento_max": 1
+      }
+    },
+    {
+      "etapa": "Limpieza",
+      "pandas": {
+        "archivo": "limpieza.py",
+        "loc": 45,
+        "lineas_totales": 102,
+        "funciones": 3,
+        "loc_por_funcion": 10.7,
+        "cc_total": 10,
+        "cc_max": 8,
+        "funcion_cc_max": "limpiar_transacciones",
+        "anidamiento_max": 1
+      },
+      "spark": {
+        "archivo": "limpieza.py",
+        "loc": 53,
+        "lineas_totales": 105,
+        "funciones": 4,
+        "loc_por_funcion": 9.8,
+        "cc_total": 6,
+        "cc_max": 2,
+        "funcion_cc_max": "limpiar_transacciones",
+        "anidamiento_max": 1
+      }
+    },
+    {
+      "etapa": "Joins",
+      "pandas": {
+        "archivo": "joins.py",
+        "loc": 59,
+        "lineas_totales": 109,
+        "funciones": 4,
+        "loc_por_funcion": 14.2,
+        "cc_total": 15,
+        "cc_max": 4,
+        "funcion_cc_max": "unir_productos",
+        "anidamiento_max": 1
+      },
+      "spark": {
+        "archivo": "joins.py",
+        "loc": 14,
+        "lineas_totales": 57,
+        "funciones": 4,
+        "loc_por_funcion": 2.0,
+        "cc_total": 4,
+        "cc_max": 1,
+        "funcion_cc_max": "unir_productos",
+        "anidamiento_max": 0
+      }
+    },
+    {
+      "etapa": "Agregaciones (4 consultas)",
+      "pandas": {
+        "archivo": "agregaciones.py",
+        "loc": 108,
+        "lineas_totales": 174,
+        "funciones": 6,
+        "loc_por_funcion": 17.7,
+        "cc_total": 11,
+        "cc_max": 4,
+        "funcion_cc_max": "consulta_4_ticket_clientes_fidelizacion",
+        "anidamiento_max": 3
+      },
+      "spark": {
+        "archivo": "agregaciones.py",
+        "loc": 85,
+        "lineas_totales": 158,
+        "funciones": 7,
+        "loc_por_funcion": 9.0,
+        "cc_total": 7,
+        "cc_max": 1,
+        "funcion_cc_max": "calcular_metricas_financieras",
+        "anidamiento_max": 0
+      }
+    },
+    {
+      "etapa": "Escritura Parquet",
+      "pandas": {
+        "archivo": "escritura.py",
+        "loc": 23,
+        "lineas_totales": 46,
+        "funciones": 1,
+        "loc_por_funcion": 17.0,
+        "cc_total": 2,
+        "cc_max": 2,
+        "funcion_cc_max": "guardar_resultados_parquet",
+        "anidamiento_max": 1
+      },
+      "spark": {
+        "archivo": "escritura.py",
+        "loc": 17,
+        "lineas_totales": 52,
+        "funciones": 2,
+        "loc_por_funcion": 6.0,
+        "cc_total": 2,
+        "cc_max": 1,
+        "funcion_cc_max": "guardar_resultado",
+        "anidamiento_max": 0
+      }
+    },
+    {
+      "etapa": "Mitigación por chunks",
+      "pandas": {
+        "archivo": "mitigaciones.py",
+        "loc": 139,
+        "lineas_totales": 204,
+        "funciones": 2,
+        "loc_por_funcion": 60.0,
+        "cc_total": 23,
+        "cc_max": 18,
+        "funcion_cc_max": "ejecutar_pipeline_mitigado_por_chunks",
+        "anidamiento_max": 4
+      },
+      "spark": null
+    },
+    {
+      "etapa": "Orquestación (CLI)",
+      "pandas": {
+        "archivo": "main.py",
+        "loc": 132,
+        "lineas_totales": 181,
+        "funciones": 3,
+        "loc_por_funcion": 36.3,
+        "cc_total": 11,
+        "cc_max": 9,
+        "funcion_cc_max": "main",
+        "anidamiento_max": 3
+      },
+      "spark": {
+        "archivo": "main.py",
+        "loc": 160,
+        "lineas_totales": 223,
+        "funciones": 3,
+        "loc_por_funcion": 44.3,
+        "cc_total": 17,
+        "cc_max": 9,
+        "funcion_cc_max": "ejecutar_pipeline",
+        "anidamiento_max": 2
+      }
+    }
+  ],
+  "totales": {
+    "pandas": {
+      "archivos": 7,
+      "loc": 584,
+      "funciones": 22,
+      "cc_total": 93,
+      "cc_max": 18,
+      "anidamiento_max": 4,
+      "cc_media_por_funcion": 4.23
+    },
+    "spark": {
+      "archivos": 7,
+      "loc": 426,
+      "funciones": 27,
+      "cc_total": 51,
+      "cc_max": 9,
+      "anidamiento_max": 2,
+      "cc_media_por_funcion": 1.89
+    }
+  }
+}

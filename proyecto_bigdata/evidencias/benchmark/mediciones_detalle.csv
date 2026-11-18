@@ -1,0 +1,13 @@
+archivos,cpu_promedio_pct,detalle,duracion_seg,estado,filas,fuente,gb_csv,muestra_pct,nucleos_efectivos,pico_ram_gb,ram_sistema_pico_pct,repeticion,version
+1,,,12.76,OK,1235843,"Sección 5 del informe (Tabla 10), una ejecución",0.115,1.0,,1.2,,1,pandas_directo
+1,,,7.52,OK,1235843,"Sección 5 del informe (Tabla 10), una ejecución",0.115,1.0,,0.72,,1,pandas_mitigado
+1,,,18.2,OK,1235843,"Sección 5 del informe (Tabla 10), una ejecución",0.115,1.0,,1.45,,1,spark
+10,,,112.4,OK,12358430,"Sección 5 del informe (Tabla 10), una ejecución",1.153,10.0,,4.15,,1,pandas_directo
+10,,,58.3,OK,12358430,"Sección 5 del informe (Tabla 10), una ejecución",1.153,10.0,,1.85,,1,pandas_mitigado
+10,,,34.5,OK,12358430,"Sección 5 del informe (Tabla 10), una ejecución",1.153,10.0,,2.1,,1,spark
+50,,MemoryError tras ≈140 s,140.0,MEMORY_ERROR,61792150,"Sección 5 del informe (Tabla 10), una ejecución",5.766,50.0,,,,1,pandas_directo
+50,,Resultado no exacto (deduplicación local),385.6,OK,61792150,"Sección 5 del informe (Tabla 10), una ejecución",5.766,50.0,,4.95,,1,pandas_mitigado
+50,,,92.1,OK,61792150,"Sección 5 del informe (Tabla 10), una ejecución",5.766,50.0,,3.8,,1,spark
+100,,"MemoryError, código de salida 137 (§5.2)",212.54,MEMORY_ERROR,123584300,"Sección 5 del informe (Tabla 10), una ejecución",11.532,100.0,,,,1,pandas_directo
+100,,"Más de 1,5 h y falla de memoria en los conjuntos de clientes",5400.0,MEMORY_ERROR,123584300,"Sección 5 del informe (Tabla 10), una ejecución",11.532,100.0,,,,1,pandas_mitigado
+100,,,178.4,OK,123584300,"Sección 5 del informe (Tabla 10), una ejecución",11.532,100.0,,4.6,,1,spark
