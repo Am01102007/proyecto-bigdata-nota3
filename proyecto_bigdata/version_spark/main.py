@@ -8,6 +8,7 @@ Uso (desde la raíz del proyecto, con el entorno virtual activado):
     python version_spark/main.py --muestra 100
     python version_spark/main.py --muestra 10 --explain --perfil
     python version_spark/main.py --muestra 100 --guardar-base --memoria-driver 4g
+    python version_spark/main.py --muestra 100 --esperar   # deja la Spark UI abierta
 
 Para el benchmark (otro script) se puede importar `ejecutar_pipeline`, que recibe una
 SparkSession ya creada y devuelve los tiempos por etapa:
@@ -157,6 +158,8 @@ def main() -> None:
                         help="Guarda los planes de ejecución en evidencias/planes_spark/")
     parser.add_argument("--perfil", action="store_true",
                         help="Cuenta los problemas de calidad del CSV crudo (pasada extra)")
+    parser.add_argument("--esperar", action="store_true",
+                        help="Al terminar, mantiene abierta la Spark UI hasta pulsar Enter (capturas)")
     args = parser.parse_args()
 
     print("=" * 70)
@@ -207,6 +210,11 @@ def main() -> None:
         for nombre, salida in metricas["salidas"].items():
             print(f"\n>>> Muestra de {nombre} ({salida['filas']:,} filas):")
             spark.read.parquet(salida["ruta"]).show(3, truncate=False)
+
+        if args.esperar:
+            # La Spark UI vive mientras viva la sesión: spark.stop() la cierra.
+            input(f"\nSpark UI abierta en {spark.sparkContext.uiWebUrl} (pestañas SQL y Stages). "
+                  "Pulse Enter para cerrar...")
     finally:
         spark.stop()
 

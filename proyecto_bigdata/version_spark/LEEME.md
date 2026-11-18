@@ -13,6 +13,7 @@ paralelo, evaluación perezosa, *broadcast joins*, caché, Parquet particionado 
 ```
 version_spark/
 ├── LEEME.md                  <- este documento
+├── PRUEBAS_WINDOWS.md        <- instrucciones de prueba en el equipo de Windows
 ├── __init__.py
 ├── sesion.py                 <- SparkSession local[*]: memoria, particiones, AQE
 ├── cargador.py               <- CSV con esquema explícito (sin inferSchema)
@@ -21,7 +22,8 @@ version_spark/
 ├── agregaciones.py           <- 4 consultas: DataFrames, Spark SQL, ventana rank()
 ├── escritura.py              <- Parquet de resultados + base particionada por anio/mes
 ├── main.py                   <- CLI y función ejecutar_pipeline() para el benchmark
-└── validar_equivalencia.py   <- compara los resultados con los de pandas
+├── validar_equivalencia.py   <- compara los resultados con los de pandas
+└── verificar_resultados.py   <- coherencia interna de los resultados y partition pruning
 ```
 
 Cada módulo tiene su equivalente en `version_pandas/` para poder compararlos en el informe (§4).
@@ -54,11 +56,13 @@ python version_spark\main.py --muestra 100 --guardar-base # + Parquet particiona
 | `--guardar-base` | Escribe la base limpia en `resultados/spark/ventas_limpias/anio=…/mes=…/` |
 | `--explain` | Guarda los planes físicos en `evidencias/planes_spark/` |
 | `--perfil` | Cuenta los problemas de calidad del CSV crudo (hace una pasada extra) |
+| `--esperar` | Al terminar, deja la Spark UI abierta hasta pulsar Enter (para las capturas) |
 
 **Salidas:**
 - `resultados/spark/<consulta>/part-*.parquet`
 - `resultados/spark/resumen_ejecucion.json` (tiempos por etapa, filas y configuración).
 - Mientras corre, la Spark UI está en http://localhost:4040 (sirve para las capturas de DAG y *stages*).
+  Se cierra con `spark.stop()`; para revisarla al final, use `--esperar`.
 
 ---
 
@@ -115,6 +119,8 @@ Windows, igual que las de pandas.
 | 1 archivo (1,07 M de filas) | Pipeline completo en 7,6 s |
 | 10 archivos (10,7 M de filas, 1 GB) | 17,1 s con caché frente a 25,7 s sin caché |
 | Base limpia en Parquet particionado | 1 GB de CSV pasa a 207 MB (36 carpetas `anio/mes`) |
+| 10 archivos con `--memoria-driver 4g` (lo del equipo de pruebas) | 15,6 s; pico de RAM de Python + JVM: 4,58 GB |
+| `verificar_resultados.py` sobre los 10 archivos | 10/10 comprobaciones correctas |
 | Perfil de calidad (1 archivo) | 3.214 duplicados, 5.335 fechas `dd/mm`, 86.042 clientes nulos, 32.223 métodos de pago sucios |
 
 ---
@@ -151,9 +157,10 @@ El informe queda en `evidencias/equivalencia_pandas_spark.md`. Resultado con la 
   de pandas leídas con los dos formatos explícitos, las 4 consultas son equivalentes. Corrección
   propuesta para `version_pandas/limpieza.py`:
   ```python
-  alt = serie.str.contains("/", na=False)
-  dt = pd.to_datetime(serie.where(~alt), format="%Y-%m-%d %H:%M:%S", errors="coerce")
-  dt = dt.fillna(pd.to_datetime(serie.where(alt), format="%d/%m/%Y %H:%M", errors="coerce"))
+  s = serie.astype("string")
+  alt = s.str.contains("/", na=False)
+  dt = pd.to_datetime(s.where(~alt), format="%Y-%m-%d %H:%M:%S", errors="coerce")
+  dt = dt.fillna(pd.to_datetime(s.where(alt), format="%d/%m/%Y %H:%M", errors="coerce"))
   ```
 - **Diferencias de céntimos en el ticket promedio.** pandas guarda los montos en `float32`
   (mitigación de memoria), que cerca de 87.000 solo distingue saltos de unos 0,008. Por eso pandas
@@ -189,15 +196,13 @@ El informe queda en `evidencias/equivalencia_pandas_spark.md`. Resultado con la 
 
 ## 7. Protocolo en el equipo de pruebas (Windows)
 
-```powershell
-git pull ; git checkout version-spark            # o main, después del merge
-.\.venv\Scripts\Activate.ps1
-python scripts\verificar_entorno.py             # todo [OK]
-python version_spark\main.py --muestra 1 --explain --perfil
-python version_pandas\main.py --muestra 1
-python version_spark\validar_equivalencia.py --etiqueta "muestra 1 % - Windows"
-python version_spark\main.py --muestra 100 --guardar-base   # prueba de que Spark completa el 100 %
-```
-Guarde la consola de cada paso en `evidencias/` (`... > evidencias\spark_100.txt 2>&1`) y haga una
-captura del Administrador de tareas y de la Spark UI (http://localhost:4040) durante la
-ejecución del 100 %.
+Los pasos están en [PRUEBAS_WINDOWS.md](PRUEBAS_WINDOWS.md):
+
+1. Verificación del entorno.
+2. Corrección de fechas en pandas.
+3. Equivalencia con la muestra del 1 %.
+4. Ejecución del 100 % con `--esperar`.
+5. `verificar_resultados.py`.
+6. Capturas para el informe.
+
+Cada paso indica el resultado esperado.
