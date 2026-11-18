@@ -46,7 +46,10 @@ def normalizar_fechas(serie: pd.Series) -> tuple[pd.Series, pd.Series]:
         - serie_datetime: Timestamp normalizado
         - serie_año_mes: String 'YYYY-MM' para agrupaciones mensuales de negocio
     """
-    dt = pd.to_datetime(serie, format="mixed", errors="coerce")
+    s = serie.astype("string")
+    alt = s.str.contains("/", na=False)
+    dt = pd.to_datetime(s.where(~alt), format="%Y-%m-%d %H:%M:%S", errors="coerce")
+    dt = dt.fillna(pd.to_datetime(s.where(alt), format="%d/%m/%Y %H:%M", errors="coerce"))
     año_mes = dt.dt.to_period("M").astype(str)
     return dt, año_mes
 
