@@ -46,10 +46,8 @@ def normalizar_fechas(serie: pd.Series) -> tuple[pd.Series, pd.Series]:
         - serie_datetime: Timestamp normalizado
         - serie_año_mes: String 'YYYY-MM' para agrupaciones mensuales de negocio
     """
-    # Cada formato se lee con su patrón explícito. format="mixed" interpretaba
-    # 07/09/2023 como 9 de julio (mes/día) en lugar de 7 de septiembre.
     s = serie.astype("string")
-    alt = s.str.contains("/", na=False)          # formato dd/mm/aaaa HH:MM
+    alt = s.str.contains("/", na=False)
     dt = pd.to_datetime(s.where(~alt), format="%Y-%m-%d %H:%M:%S", errors="coerce")
     dt = dt.fillna(pd.to_datetime(s.where(alt), format="%d/%m/%Y %H:%M", errors="coerce"))
     año_mes = dt.dt.to_period("M").astype(str)
